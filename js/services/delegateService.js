@@ -23,7 +23,7 @@ angular.module('liskApp').service('delegateService', function ($http, $filter, $
     }
 
     var delegates = {
-        topRate: 101,
+        topRate: 41,
         gettingStandBy: false,
         gettingTop: false,
         gettingVoted: false,

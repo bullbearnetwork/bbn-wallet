@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('addDappModalController', ["riseAPI", "dposOffline", "$scope", "$http", "addDappModal", "userService", "feeService", "viewFactory", 'gettextCatalog', function (riseAPI, dposOffline, $scope, $http, addDappModal, userService, feeService, viewFactory, gettextCatalog) {
+angular.module('liskApp').controller('addDappModalController', ["riseAPI", "$scope", "$http", "addDappModal", "userService", "feeService", "viewFactory", 'gettextCatalog', function (riseAPI, $scope, $http, addDappModal, userService, feeService, viewFactory, gettextCatalog) {
 
     $scope.sending = false;
     $scope.view = viewFactory;
@@ -86,7 +86,7 @@ angular.module('liskApp').controller('addDappModalController', ["riseAPI", "dpos
         if (!$scope.sending) {
             $scope.view.inLoading = $scope.sending = true;
 
-            var shiftjs = require('shift-js');
+            // var shiftjs = require('shift-js');
             var transaction = shiftjs.dapp.createDapp(data.secret, data.secondSecret, {
                 name: data.name,
                 icon: data.icon,

@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('liskApp').controller('secondPassphraseModalController', ['dposOffline', 'timestampService', 'riseAPI', "$scope", "secondPassphraseModal", "$http", "userService", "feeService", function (dposOffline, timestampService, riseAPI, $scope, secondPassphraseModal, $http, userService, feeService) {
+angular.module('liskApp').controller('secondPassphraseModalController',
+  ['txService', 'BBNOffline', 'timestampService', 'riseAPI', "$scope", "secondPassphraseModal", "$http", "userService", "feeService",
+    function (txService, BBNOffline, timestampService, riseAPI, $scope, secondPassphraseModal, $http, userService, feeService) {
 
     $scope.sending = false;
     $scope.rememberedPassphrase = userService.rememberPassphrase ? userService.rememberedPassphrase : false;
@@ -62,35 +64,29 @@ angular.module('liskApp').controller('secondPassphraseModalController', ['dposOf
     $scope.addNewPassphrase = function (pass) {
         if (!$scope.sending) {
             $scope.sending = true;
-            var wallet = new dposOffline.wallets.LiskLikeWallet(pass, 'R');
-            var secondWallet = new dposOffline.wallets.LiskLikeWallet($scope.newPassphrase, 'R');
-            var transaction = wallet.signTransaction(
-            new dposOffline.transactions.CreateSignatureTx({
-              signature: {publicKey: secondWallet.publicKey},
-            })
-              .set('timestamp', timestampService())
-              .set('fee', $scope.fees.secondsignature)
-            );
-
-            riseAPI.transport({
-                nethash: $scope.nethash,
-                port: $scope.port,
-                version: $scope.version
-            })
-            .postTransaction(transaction)
-            .then(function () {
-              $scope.sending = false;
-              if ($scope.destroy) {
-                $scope.destroy(true);
-              }
-              Materialize.toast('Transaction sent', 3000, 'green white-text');
-              secondPassphraseModal.deactivate();
-            })
-            .catch(function(err) {
-              $scope.sending = false;
-              Materialize.toast('Transaction error', 3000, 'red white-text');
-              $scope.errorMessage.fromServer = err.message;
-            });
+            var kp1 = BBNOffline.deriveKeypair(pass);
+            var kp2 = BBNOffline.deriveKeypair($scope.newPassphrase);
+            txService
+              .signAndBroadcast(
+                {
+                  kind: 'second-signature',
+                  publicKey: kp2.publicKey
+                },
+                pass
+              )
+              .then(function () {
+                $scope.sending = false;
+                if ($scope.destroy) {
+                  $scope.destroy(true);
+                }
+                Materialize.toast('Transaction sent', 3000, 'green white-text');
+                secondPassphraseModal.deactivate();
+              })
+              .catch(function(err) {
+                $scope.sending = false;
+                Materialize.toast('Transaction error', 3000, 'red white-text');
+                $scope.errorMessage.fromServer = err.message;
+              });
         }
     }
 

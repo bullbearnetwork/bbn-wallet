@@ -188,9 +188,7 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
                 $scope.delegateInRegistration = userService.delegateInRegistration;
 
                 if ($state.current.name != 'passphrase') {
-                    $scope.getMultisignatureAccounts(function (multisignature) {
-                        $scope.multisignature = !_.isEmpty(userService.u_multisignatures) || !_.isEmpty(userService.multisignatures) || multisignature;
-                    });
+                    $scope.multisignature = false;
                 }
 
                 if ($state.current.name == 'main.dashboard' || $state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
@@ -328,39 +326,6 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
       cb($scope.forging);
     };
 
-    $scope.getMultisignatureAccounts = function (cb) {
-        var queryParams = {
-            publicKey: userService.publicKey
-        }
-
-        $http.get("/api/multisignatures/accounts", {
-            params: queryParams
-        })
-            .then(function (response) {
-                if (response.data.success) {
-                    if (response.data.accounts.length) {
-                        return userService.setMultisignature(true, cb);
-                    } else {
-                        $http.get("/api/multisignatures/pending", {
-                            params: queryParams
-                        })
-                            .then(function (response) {
-                                if (response.data.success) {
-                                    if (response.data.transactions.length) {
-                                        return userService.setMultisignature(true, cb);
-                                    } else {
-                                        return userService.setMultisignature(false, cb);
-                                    }
-                                } else {
-                                    return userService.setMultisignature(false, cb);
-                                }
-                            });
-                    }
-                } else {
-                    return userService.setMultisignature(false, cb);
-                }
-            });
-    }
 
     $scope.registrationDelegate = function () {
         $scope.registrationDelegateModal = registrationDelegateModal.activate({

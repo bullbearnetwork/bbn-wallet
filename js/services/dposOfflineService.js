@@ -1,5 +1,7 @@
 require('angular');
-var dposOffline  = require('dpos-offline').dposOffline;
-angular.module('liskApp').service('dposOffline', function () {
-  return dposOffline;
+var BBN = require('bbn-offline').BBN;
+
+
+angular.module('liskApp').service('BBNOffline', function () {
+  return BBN;
 });

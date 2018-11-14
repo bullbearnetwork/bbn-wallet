@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('newUserController', ["dposOffline","$scope", "$http", "newUser", "userService", "$state", "viewFactory", 'gettextCatalog', function (dposOffline, $scope, $http, newUser, userService, $state, viewFactory, gettextCatalog) {
+angular.module('liskApp').controller('newUserController', ["BBNOffline","$scope", "$http", "newUser", "userService", "$state", "viewFactory", 'gettextCatalog', function (BBNOffline, $scope, $http, newUser, userService, $state, viewFactory, gettextCatalog) {
 
     $scope.step = 1;
     $scope.noMatch = false;
@@ -35,10 +35,10 @@ angular.module('liskApp').controller('newUserController', ["dposOffline","$scope
         if (!Mnemonic.isValid(pass) || ($scope.newPassphrase !== pass)) {
             $scope.noMatch = true;
         } else {
-
-          var wallet = new dposOffline.wallets.LiskLikeWallet(pass, 'R');
+          var kp = BBNOffline.deriveKeypair(pass);
+          var address = BBNOffline.calcAddress(kp.publicKey);
           newUser.deactivate();
-          userService.setData(wallet.address, wallet.publicKey, 0,0,0);
+          userService.setData(address, kp.publicKey, 0,0,0);
           userService.setForging(0);
           userService.setSecondPassphrase(0);
           userService.unconfirmedPassphrase = 0;

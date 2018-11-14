@@ -1,8 +1,8 @@
 require('angular');
 
 angular.module('liskApp').controller('registrationDelegateModalController',
-  ['txService', 'dposOffline', 'timestampService', 'riseAPI', "$scope", "registrationDelegateModal", "$http", "userService", "feeService", "delegateService",
-  function (txService, dposOffline, timestampService, riseAPI, $scope, registrationDelegateModal, $http, userService, feeService, delegateService) {
+  ['txService', 'BBNOffline', 'timestampService', 'riseAPI', "$scope", "registrationDelegateModal", "$http", "userService", "feeService", "delegateService",
+  function (txService, BBNOffline, timestampService, riseAPI, $scope, registrationDelegateModal, $http, userService, feeService, delegateService) {
 
     $scope.error = null;
     $scope.sending = false;
@@ -110,16 +110,12 @@ angular.module('liskApp').controller('registrationDelegateModalController',
             }
             txService
                 .signAndBroadcast(
-                    new dposOffline.transactions.DelegateTx({
-                        delegate: {
-                            username: data.username,
-                            publicKey: userService.publicKey, // TODO: to be removed
-                        }
-                    })
-                        .set('timestamp', timestampService())
-                        .set('fee', $scope.fees.delegate),
-                    data.secret,
-                    data.secondSecret
+                  {
+                    kind: 'register-delegate',
+                    identifier: data.username
+                  },
+                  data.secret,
+                  data.secondSecret
                 )
                 .then(function () {
                     $scope.sending = false;

@@ -1,8 +1,8 @@
 require('angular');
 
 angular.module('liskApp').controller('sendTransactionController',
-  ['txService', 'dposOffline', 'timestampService', 'riseAPI', '$scope', 'sendTransactionModal', '$http', 'userService', 'feeService', '$timeout', '$filter',
-    function (txService, dposOffline, timestampService, riseAPI, $scope, sendTransactionModal, $http, userService, feeService, $timeout, $filter) {
+  ['txService', 'BBNOffline', 'timestampService', 'riseAPI', '$scope', 'sendTransactionModal', '$http', 'userService', 'feeService', '$timeout', '$filter',
+    function (txService, BBNOffline, timestampService, riseAPI, $scope, sendTransactionModal, $http, userService, feeService, $timeout, $filter) {
 
     $scope.sending = false;
     $scope.passmode = false;
@@ -45,7 +45,8 @@ angular.module('liskApp').controller('sendTransactionController',
     }
 
     function validateForm (onValid) {
-        var isAddress = /^[0-9]+[R|r]$/g;
+        // TODO: RegExp
+        var isAddress = /^.*$/g;
         var correctAddress = isAddress.test($scope.to);
 
         $scope.errorMessage = {};
@@ -233,13 +234,13 @@ angular.module('liskApp').controller('sendTransactionController',
             }
             txService
                 .signAndBroadcast(
-                    new dposOffline.transactions.SendTx()
-                        .set('recipientId', data.recipientId)
-                        .set('amount', data.amount)
-                        .set('timestamp', timestampService())
-                        .set('fee', $scope.fees.send),
-                    data.secret,
-                    data.secondSecret
+                  {
+                    kind: 'send',
+                    amount: data.amount,
+                    recipient: data.recipientId,
+                  },
+                  data.secret,
+                  data.secondSecret
                 )
                 .then(function () {
                     $scope.sending = false;

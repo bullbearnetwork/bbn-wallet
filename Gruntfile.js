@@ -97,7 +97,7 @@ module.exports = function (grunt) {
         watch: {
           js: {
               files: ["js/**/*.js"],
-              tasks: ["concat:release", "browserify", "concat:withoutBrowserify", "uglify:release"]
+              tasks: ["concat:release", "browserify", "concat:withoutBrowserify"]
           },
           css: {
              files: ["css/**/*.less"],

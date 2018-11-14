@@ -143,13 +143,13 @@ angular.module('liskApp').controller('forgingController', ['$scope', '$rootScope
             var rank = response.rate;
 
             if (!rank || rank == 0) {
-                $scope.graphs.rank.values = [0, 100];
+                $scope.graphs.rank.values = [0, 41];
             } else {
                 $scope.graphs.rank.values = [totalDelegates - rank, totalDelegates - 1 - (totalDelegates - rank) == -1 ? 0 : totalDelegates - 1 - (totalDelegates - rank)];
             }
 
-            if (($scope.rank == 0 && rank != 0) || ($scope.rank > 50 && rank <= 50) || ($scope.rank > 101 && rank <= 101) || ($scope.rank <= 50 && rank > 50)) {
-                $scope.graphs.rank.colours = [rank <= 50 ? '#7cb342' : (rank > 101 ? '#d32f2f' : '#ffa000'), '#f5f5f5'];
+            if (($scope.rank == 0 && rank != 0) || ($scope.rank > 50 && rank <= 50) || ($scope.rank > 41 && rank <= 41) || ($scope.rank <= 50 && rank > 50)) {
+                $scope.graphs.rank.colours = [rank <= 50 ? '#7cb342' : (rank > 41 ? '#d32f2f' : '#ffa000'), '#f5f5f5'];
             }
 
             $scope.rank = rank;

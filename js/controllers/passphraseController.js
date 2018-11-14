@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('liskApp').controller('passphraseController', ['ledgerConfirmAddressModal', 'ledgerNano', 'dposOffline', 'riseAPI', '$scope', '$rootScope', '$http', "$state", "userService", "newUser", 'gettextCatalog', '$cookies',
-  function (ledgerConfirmAddressModal, ledgerNano, dposOffline, rise, $rootScope, $scope, $http, $state, userService, newUser, gettextCatalog, $cookies) {
+angular.module('liskApp').controller('passphraseController', ['ledgerConfirmAddressModal', 'ledgerNano', 'BBNOffline', 'riseAPI', '$scope', '$rootScope', '$http', "$state", "userService", "newUser", 'gettextCatalog', '$cookies',
+  function (ledgerConfirmAddressModal, ledgerNano, BBNOffline, rise, $rootScope, $scope, $http, $state, userService, newUser, gettextCatalog, $cookies) {
 
     userService.setData();
     userService.rememberPassphrase = false;
@@ -107,12 +107,15 @@ angular.module('liskApp').controller('passphraseController', ['ledgerConfirmAddr
             return;
         }
         $scope.errorMessage = "";
-        var wallet = new dposOffline.wallets.LiskLikeWallet(pass, 'R');
+        var wallet = BBNOffline.deriveKeypair(pass);
         userService.usingLedger = false;
         if (remember && pass) {
           userService.setSessionPassphrase(pass);
         }
-        walletLogin(wallet, remember);
+        walletLogin({
+          address: BBNOffline.calcAddress(wallet.publicKey),
+          publicKey: wallet.publicKey.toString('hex')
+        }, remember);
 
     }
 

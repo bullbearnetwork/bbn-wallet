@@ -1,7 +1,7 @@
 require('angular');
 
 angular.module('liskApp').service('txService',
-  function (riseAPI, dposOffline, ledgerNano, userService, ledgerConfirmTransactionModal) {
+  function (riseAPI, BBNOffline, ledgerNano, userService, ledgerConfirmTransactionModal) {
   function _signTransaction(tx, secret, secondSecret) {
     if (userService.usingLedger) {
       tx.senderPublicKey = userService.publicKey;
@@ -26,13 +26,33 @@ angular.module('liskApp').service('txService',
           return Promise.reject(err);
         });
     } else {
-      var wallet = new dposOffline.wallets.LiskLikeWallet(secret, 'R');
-      var secondWallet = null;
+      var walletKP = BBNOffline.deriveKeypair(secret);
+
+      var secondWalletKP = null;
       if (secondSecret) {
-        secondWallet = new dposOffline.wallets.LiskLikeWallet(secondSecret, 'R');
+        secondWalletKP = BBNOffline.deriveKeypair(secondSecret);
       }
-      userService.checkWallets(wallet, secondWallet);
-      var signedTx = wallet.signTransaction(tx, secondWallet);
+
+      userService.checkWallets({
+        address: BBNOffline.calcAddress(walletKP.publicKey),
+        publicKey: walletKP.publicKey.toString('hex')
+      }, {
+        publicKey: secondWalletKP ? secondWalletKP.publicKey.toString('hex'): null
+      });
+      var signedTx = BBNOffline.txs.createAndSign(
+        tx,
+        BBNOffline.deriveKeypair(secret),
+        true
+        );
+      if (secondSecret) {
+        var secondSign = BBNOffline.txs.calcSignature(signedTx, BBNOffline.deriveKeypair(secondSecret), {
+          skipSignature: false,
+          skipSecondSignature: true
+        });
+        signedTx.signSignature = secondSign;
+        signedTx.id = BBNOffline.txs.identifier(signedTx);
+      }
+      signedTx = BBNOffline.txs.toPostable(signedTx);
       return Promise.resolve(signedTx);
     }
 

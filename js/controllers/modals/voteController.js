@@ -1,6 +1,7 @@
 require('angular');
 
-angular.module('liskApp').controller('voteController', ['txService', 'dposOffline', 'timestampService', "riseAPI", "$scope", "voteModal", "$http", "userService", "feeService", "$timeout", function (txService, dposOffline, timestampService, riseAPI, $scope, voteModal, $http, userService, feeService, $timeout) {
+angular.module('liskApp').controller('voteController', ['txService', 'BBNOffline', 'timestampService', "riseAPI", "$scope", "voteModal", "$http", "userService", "feeService", "$timeout",
+  function (txService, BBNOffline, timestampService, riseAPI, $scope, voteModal, $http, userService, feeService, $timeout) {
 
     $scope.sending = false;
     $scope.passmode = false;
@@ -87,14 +88,17 @@ angular.module('liskApp').controller('voteController', ['txService', 'dposOfflin
             }
             txService
                 .signAndBroadcast(
-                    new dposOffline.transactions.VoteTx({
-                        votes: data.delegates,
+                  {
+                    kind: 'vote',
+                    preferences: Object.keys($scope.voteList).map(function (key) {
+                      return {
+                        action: $scope.adding ? '+' : '-',
+                        delegateIdentifier: Buffer.from(key, 'hex')
+                      };
                     })
-                        .set('fee', $scope.fees.vote)
-                        .set('recipientId', userService.address)
-                        .set('timestamp', timestampService()),
-                    data.secret,
-                    data.secondSecret
+                  },
+                  data.secret,
+                  data.secondSecret
                 )
                 .then(function () {
                     $scope.sending = false;

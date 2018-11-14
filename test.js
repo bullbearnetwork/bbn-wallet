@@ -1,7 +1,7 @@
 var https = require('https');
 var fs = require('fs');
-var apiNode = 'twallet.rise.vision';
-var apiProto = 'https';
+var apiNode = 'localhost:5555';
+var apiProto = 'http';
 var express = require('express');
 var httpProxy = require('http-proxy-middleware');
 var wsProxy = httpProxy('ws://'+apiNode, {changeOrigin:true});

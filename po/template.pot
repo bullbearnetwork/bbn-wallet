@@ -36,7 +36,7 @@ msgid "Account Verification"
 msgstr ""
 
 #: partials/modals/multisignatureModal.html:46
-msgid "Add group members by typing in their Rise address and pressing enter."
+msgid "Add group members by typing in their BBN address and pressing enter."
 msgstr ""
 
 #: js/controllers/blockchainController.js:45
@@ -66,6 +66,26 @@ msgstr ""
 
 #: partials/modals/confirmDeletionModal.html:16
 msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+#: partials/modals/multisignatureModal.html:52
+msgid "BBN Address"
+msgstr ""
+
+#: partials/modals/sendTransaction.html:29
+msgid "BBN Amount"
+msgstr ""
+
+#: partials/account.html:33
+msgid "BBN Client"
+msgstr ""
+
+#: partials/account.html:43
+msgid "BBN Client Outdated"
+msgstr ""
+
+#: partials/forging.html:17
+msgid "BBN Earned"
 msgstr ""
 
 #: partials/modals/userInfo.html:39
@@ -303,7 +323,7 @@ msgstr ""
 msgid "Disable Forging"
 msgstr ""
 
-#: js/controllers/appController.js:317
+#: js/controllers/appController.js:315
 msgid "Disabled"
 msgstr ""
 
@@ -320,7 +340,7 @@ msgstr ""
 msgid "Enable Forging"
 msgstr ""
 
-#: js/controllers/appController.js:317
+#: js/controllers/appController.js:315
 msgid "Enabled"
 msgstr ""
 
@@ -359,7 +379,7 @@ msgstr ""
 #: partials/modals/secondPassphraseModal.html:28
 #: partials/modals/sendTransaction.html:31
 #: partials/modals/vote.html:25
-msgid "Fee: {{fee | liskFilter}} RISE"
+msgid "Fee: {{fee | liskFilter}} BBN"
 msgstr ""
 
 #: partials/forging.html:105
@@ -543,7 +563,7 @@ msgid "Make sure that you keep the second passphrase safe. You will be asked to 
 msgstr ""
 
 #: partials/modals/sendTransaction.html:41
-msgid "Make sure you're sending RISE to the right address. This action can't be undone later."
+msgid "Make sure you're sending BBN to the right address. This action can't be undone later."
 msgstr ""
 
 #: js/controllers/modals/masterPassphraseModalController.js:9
@@ -677,7 +697,7 @@ msgid "Pending transactions"
 msgstr ""
 
 #: partials/modals/multisignatureModal.html:107
-msgid "Please check your input below and go back if necessary. Double-check the group members, else you risk losing your RISE balance!"
+msgid "Please check your input below and go back if necessary. Double-check the group members, else you risk losing your BBN balance!"
 msgstr ""
 
 #: partials/modals/registrationDelegateModal.html:15
@@ -693,7 +713,7 @@ msgid "Please ensure all details are correct before confirming your blockchain a
 msgstr ""
 
 #: partials/modals/sendTransaction.html:15
-msgid "Please enter the Recipient Address and RISE Amount that you would like send below."
+msgid "Please enter the Recipient Address and BBN Amount that you would like send below."
 msgstr ""
 
 #: js/controllers/modals/masterPassphraseModalController.js:8
@@ -778,14 +798,6 @@ msgstr ""
 msgid "REMOVE VOTE"
 msgstr ""
 
-#: partials/modals/sendTransaction.html:29
-msgid "RISE Amount"
-msgstr ""
-
-#: partials/forging.html:17
-msgid "RISE Earned"
-msgstr ""
-
 #: js/controllers/delegatesController.js:189
 #: js/controllers/forgingController.js:41
 #: js/controllers/votedDelegatesController.js:128
@@ -840,16 +852,7 @@ msgstr ""
 #: js/controllers/delegatesController.js:191
 #: js/controllers/votedDelegatesController.js:130
 #: js/controllers/walletPendingsController.js:43
-#: partials/modals/multisignatureModal.html:52
 msgid "Rise Address"
-msgstr ""
-
-#: partials/account.html:33
-msgid "Rise Client"
-msgstr ""
-
-#: partials/account.html:43
-msgid "Rise Client Outdated"
 msgstr ""
 
 #: partials/modals/newUser.html:36
@@ -907,7 +910,7 @@ msgstr ""
 #: partials/modals/sendTransaction.html:13
 #: partials/modals/userInfo.html:28
 #: partials/votes.html:49
-msgid "Send RISE"
+msgid "Send BBN"
 msgstr ""
 
 #: js/controllers/transactionsController.js:63
@@ -991,11 +994,11 @@ msgid "Summary"
 msgstr ""
 
 #: partials/modals/openDappModal.html:19
-msgid "The Rise apps platform currently does not provide any protection against any unauthorized system calls made from the running application. Therefore opening any untrusted applications is not yet advisable, and could potentially lead to loss of funds."
+msgid "The BBN apps platform currently does not provide any protection against any unauthorized system calls made from the running application. Therefore opening any untrusted applications is not yet advisable, and could potentially lead to loss of funds."
 msgstr ""
 
 #: partials/modals/masterPassphraseModal.html:30
-msgid "The master passphrase is auto-generated upon first launching the Rise client. It can be found at the end of the config.json file. Therefore only node operators can install, launch or uninstall applications. Once applications are in a launched state, anyone is free to open and use them."
+msgid "The master passphrase is auto-generated upon first launching the BBN client. It can be found at the end of the config.json file. Therefore only node operators can install, launch or uninstall applications. Once applications are in a launched state, anyone is free to open and use them."
 msgstr ""
 
 #: partials/modals/newUser.html:68
@@ -1007,7 +1010,7 @@ msgid "The second passphrase entered doesn't match with the one generated before
 msgstr ""
 
 #: partials/modals/multisignatureModal.html:21
-msgid "This walkthrough will guide you through the necessary steps to create a multi-signature group. It's very important that you know what multi-signatures are, else you risk loosing your RISE balance.<br><br>A multi-signature group consists of N accounts, the one who created the group is the group owner. When the owner wants to make a transaction, M of N accounts within the group need to confirm it, otherwise the transaction will not be processed. The values M and N are specified in this walkthrough.<br><br><b>Things you need to know for the multi-signature group setup:</b><br><br>• The number of group members (N).<br>• The number of needed confirmations (M).<br>• The addresses of the Rise accounts you want to add to the group."
+msgid "This walkthrough will guide you through the necessary steps to create a multi-signature group. It's very important that you know what multi-signatures are, else you risk loosing your BBN balance.<br><br>A multi-signature group consists of N accounts, the one who created the group is the group owner. When the owner wants to make a transaction, M of N accounts within the group need to confirm it, otherwise the transaction will not be processed. The values M and N are specified in this walkthrough.<br><br><b>Things you need to know for the multi-signature group setup:</b><br><br>• The number of group members (N).<br>• The number of needed confirmations (M).<br>• The addresses of the Rise accounts you want to add to the group."
 msgstr ""
 
 #: js/controllers/blockchainController.js:43
@@ -1197,7 +1200,7 @@ msgstr ""
 #: partials/modals/sendTransaction.html:119
 #: partials/modals/sendTransaction.html:49
 #: partials/modals/sendTransaction.html:84
-msgid "send rise"
+msgid "send bbn"
 msgstr ""
 
 #: partials/delegates.html:13
