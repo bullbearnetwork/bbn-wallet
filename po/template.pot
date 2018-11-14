@@ -68,6 +68,11 @@ msgstr ""
 msgid "Are you sure you want to delete this item?"
 msgstr ""
 
+#: index.html:12
+#: wallet.html:12
+msgid "BBN - The Trader's blockchain"
+msgstr ""
+
 #: partials/modals/multisignatureModal.html:52
 msgid "BBN Address"
 msgstr ""
@@ -841,11 +846,6 @@ msgstr ""
 #: js/controllers/forgingController.js:126
 #: partials/modals/blockInfo.html:29
 msgid "Reward"
-msgstr ""
-
-#: index.html:25
-#: wallet.html:25
-msgid "Rise - Blockchain Application Platform"
 msgstr ""
 
 #: js/controllers/delegatesController.js:149

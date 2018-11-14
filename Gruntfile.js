@@ -1,4 +1,6 @@
 module.exports = function (grunt) {
+    grunt.loadNpmTasks('grunt-contrib-uglify-es');
+
     require('jit-grunt')(grunt, {
       'nggettext_extract': 'grunt-angular-gettext',
       'nggettext_compile': 'grunt-angular-gettext',
