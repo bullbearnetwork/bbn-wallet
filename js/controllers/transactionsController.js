@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('liskApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, gettextCatalog) {
+angular.module('liskApp').controller('transactionsController',
+  ['$scope', '$rootScope', 'riseAPI', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', 'gettextCatalog',
+    function ($rootScope, $scope, riseAPI, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.inLoading = true;
@@ -39,7 +41,7 @@ angular.module('liskApp').controller('transactionsController', ['$scope', '$root
                     $scope.searchTransactions.inSearch = false;
                     $scope.countForgingBlocks = params.total();
                     $scope.loading = false;
-                    $http.get('/api/transactions/unconfirmed', {
+                    $http.get(riseAPI.nodeAddress+'/api/transactions/unconfirmed', {
                         params: {
                             senderPublicKey: userService.publicKey,
                             address: userService.address

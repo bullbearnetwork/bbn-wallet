@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('liskApp').controller('votedDelegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, gettextCatalog) {
+angular.module('liskApp').controller('votedDelegatesController',
+  ['$scope', '$rootScope', '$http', 'riseAPI', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", 'gettextCatalog',
+    function ($rootScope, $scope, $http, riseAPI, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.inLoading = true;
@@ -78,7 +80,7 @@ angular.module('liskApp').controller('votedDelegatesController', ['$scope', '$ro
     $scope.unconfirmedTransactions = {
         list: [],
         getList: function () {
-            $http.get("/api/transactions/unconfirmed/", {params: {senderPublicKey: userService.publicKey}})
+            $http.get(riseAPI.nodeAddress+"/api/transactions/unconfirmed/", {params: {senderPublicKey: userService.publicKey}})
                 .then(function (response) {
                     $scope.unconfirmedTransactions.list = [];
                     response.data.transactions.forEach(function (transaction) {
@@ -127,7 +129,7 @@ angular.module('liskApp').controller('votedDelegatesController', ['$scope', '$ro
     $scope.tableMyDelegates.cols = {
         rate : gettextCatalog.getString('Rank'),
         username : gettextCatalog.getString('Name'),
-        address : gettextCatalog.getString('Rise Address'),
+        address : gettextCatalog.getString('BBN Address'),
         productivity : gettextCatalog.getString('Uptime'),
         vote : gettextCatalog.getString('Approval')
     };

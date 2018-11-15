@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').service('delegateService', function ($http, $filter, $q) {
+angular.module('liskApp').service('delegateService', function (riseAPI, $http, $filter, $q) {
 
     function filterData(data, filter) {
         return $filter('filter')(data, filter);
@@ -46,11 +46,11 @@ angular.module('liskApp').service('delegateService', function ($http, $filter, $
                     cb();
                     $defer.resolve(transformedData);
                 } else {
-                    $http.get("/api/delegates/", {params: {orderBy: "rank:asc", limit: this.topRate, offset: 0}})
+                    riseAPI.delegates.getList({orderBy: 'rank:asc', limit: this.topRate, offset: 0})
                         .then(function (response) {
-                            angular.copy(response.data.delegates, delegates.cachedTOP.data);
+                            angular.copy(response.delegates, delegates.cachedTOP.data);
                             delegates.cachedTOP.time = new Date();
-                            params.total(response.data.delegates.length);
+                            params.total(response.delegates.length);
                             var filteredData = $filter('filter')(delegates.cachedTOP.data, filter);
                             var transformedData = transformData(delegates.cachedTOP.data, filter, params);
                             delegates.gettingTop = !delegates.gettingTop;
@@ -74,10 +74,10 @@ angular.module('liskApp').service('delegateService', function ($http, $filter, $
                 else {
                     this.cachedStandby.data = [];
                     var getPart = function (limit, offset) {
-                        $http.get("/api/delegates/", {params: {orderBy: "rank:asc", limit: limit, offset: offset}})
+                        riseAPI.delegates.getList({orderBy: 'rank:asc', limit: limit, offset: offset})
                             .then(function (response) {
-                                if (response.data.delegates.length > 0) {
-                                    delegates.cachedStandby.data = delegates.cachedStandby.data.concat(response.data.delegates);
+                                if (response.delegates.length > 0) {
+                                    delegates.cachedStandby.data = delegates.cachedStandby.data.concat(response.delegates);
                                     getPart(limit, limit + offset);
                                 } else {
                                     delegates.cachedStandby.time = new Date();
@@ -105,11 +105,11 @@ angular.module('liskApp').service('delegateService', function ($http, $filter, $
                     $defer.resolve(transformedData);
                     cb();
                 } else {
-                    $http.get("/api/accounts/delegates/", {params: {address: address}})
+                  riseAPI.accounts.getDelegates(address)
                         .then(function (response) {
-                            angular.copy(response.data.delegates ? response.data.delegates : [], delegates.cachedVotedDelegates.data);
+                            angular.copy(response.delegates ? response.delegates : [], delegates.cachedVotedDelegates.data);
                             delegates.cachedVotedDelegates.time = new Date();
-                            params.total(response.data.delegates ? response.data.delegates.length : 0);
+                            params.total(response.delegates ? response.delegates.length : 0);
                             var filteredData = $filter('filter')(delegates.cachedVotedDelegates.data, filter);
                             var transformedData = transformData(delegates.cachedVotedDelegates.data, filter, params);
                             delegates.gettingVoted = !delegates.gettingVoted;
@@ -120,32 +120,35 @@ angular.module('liskApp').service('delegateService', function ($http, $filter, $
             }
         },
         getDelegate: function (publicKey, cb) {
-            $http.get("/api/delegates/get/", {params: {publicKey: publicKey}})
-                .then(function (response) {
-                    if (response.data.success) {
-                        response.data.delegate.active = delegates.isActiveRate(response.data.delegate.rank);
-                        cb(response.data.delegate);
-                    } else {
-                        cb({noDelegate: true, rate: 0, productivity: 0, vote: 0});
-                    }
-                });
+            riseAPI.delegates.getByPublicKey(publicKey)
+              .catch(function (error) {
+                cb({ noDelegate: true, rate: 0, productivity: 0, vote: 0 });
+                return null;
+              })
+              .then(function (response) {
+                if (!response) return;
+                response.delegate.active = delegates.isActiveRate(response.delegate.rank);
+                cb(response.delegate);
+
+              })
+            ;
         },
         getCountedDelegate: function (publicKey, cb) {
             $q.all([
-                $http.get("/api/delegates/get/", {params: {publicKey: publicKey}}),
-                $http.get("/api/delegates/count")
+              riseAPI.delegates.getByPublicKey(publicKey).catch(function (error) { return {success: false}}),
+              riseAPI.delegates.getList({}).catch(function () { return {success: false}})
             ]).then(function(results) {
-                if (results[0].data.success) {
+                if (results[0].success) {
                     var response = results[0];
 
-                    if (results[1].data.success) {
-                        response.data.delegate.totalCount = parseInt(results[1].data.count) || 0;
+                    if (results[1].success) {
+                        response.delegate.totalCount = parseInt(results[1].totalCount) || 0;
                     } else {
-                        response.data.delegate.totalCount = 0;
+                        response.delegate.totalCount = 0;
                     }
 
-                    response.data.delegate.active = delegates.isActiveRate(response.data.delegate.rank);
-                    cb(response.data.delegate);
+                    response.delegate.active = delegates.isActiveRate(response.delegate.rank);
+                    cb(response.delegate);
                 } else {
                     cb({noDelegate: true, rate: 0, productivity: 0, vote: 0, totalCount: 0});
                 }
@@ -153,9 +156,9 @@ angular.module('liskApp').service('delegateService', function ($http, $filter, $
         },
         getSearchList: function ($defer, search, params, filter, cb) {
             var queryParams = { params: { q: search } };
-            var endpoint    = "/api/delegates/search";
+            var endpoint    = riseAPI.nodeAddress+"/api/delegates/search";
             if (search === '') {
-                endpoint    = '/api/delegates';
+                endpoint    = riseAPI.nodeAddress+'/api/delegates';
                 queryParams = undefined;
             }
             $http.get(endpoint, queryParams)

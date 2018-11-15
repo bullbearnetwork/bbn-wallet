@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').service('blockService', function ($http) {
+angular.module('liskApp').service('blockService', function ($http, riseAPI) {
 
     var blocks = {
         lastBlockId: null,
@@ -8,7 +8,7 @@ angular.module('liskApp').service('blockService', function ($http) {
         gettingBlocks: false,
         cached: {data: [], time: new Date()},
         getBlock: function (blockID, cb) {
-            $http.get("/api/blocks/get", {
+            $http.get(riseAPI.nodeAddress+"/api/blocks/get", {
                 params: {
                     id: blockID
                 }
@@ -45,7 +45,7 @@ angular.module('liskApp').service('blockService', function ($http) {
                             offset: (params.page() - 1) * params.count(),
                             height: blocks.searchForBlock
                         }
-                        $http.get("/api/blocks/", {
+                        $http.get(riseAPI.nodeAddress+"/api/blocks/", {
                             params: queryParams
                         })
                             .then(function (response) {
@@ -74,12 +74,12 @@ angular.module('liskApp').service('blockService', function ($http) {
                     if (publicKey) {
                         queryParams.generatorPublicKey = publicKey;
                     }
-                    $http.get("/api/blocks/", {
+                    $http.get(riseAPI.nodeAddress+"/api/blocks/", {
                         params: queryParams
                     })
                         .then(function (response) {
                             if (fromBlocks) {
-                                $http.get("/api/blocks/getHeight")
+                                $http.get(riseAPI.nodeAddress+"/api/blocks/getHeight")
                                     .then(function (res) {
                                         this.gettingBlocks = false;
                                         if (res.data.success) {
@@ -107,7 +107,7 @@ angular.module('liskApp').service('blockService', function ($http) {
                                 if (publicKey) {
                                     queryParams.generatorPublicKey = publicKey;
                                 }
-                                $http.get("/api/blocks/", {params: queryParams})
+                                $http.get(riseAPI.nodeAddress+"/api/blocks/", {params: queryParams})
                                     .then(function (res) {
                                         this.gettingBlocks = false;
 

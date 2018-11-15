@@ -1,8 +1,8 @@
 require('angular');
 
 angular.module('liskApp').controller('sendTransactionController',
-  ['txService', 'BBNOffline', 'timestampService', 'riseAPI', '$scope', 'sendTransactionModal', '$http', 'userService', 'feeService', '$timeout', '$filter',
-    function (txService, BBNOffline, timestampService, riseAPI, $scope, sendTransactionModal, $http, userService, feeService, $timeout, $filter) {
+  ['txService', 'BBNOffline', 'timestampService', '$http', 'riseAPI', '$scope', 'sendTransactionModal', '$http', 'userService', 'feeService', '$timeout', '$filter',
+    function (txService, BBNOffline, timestampService, $http, riseAPI, $scope, sendTransactionModal, $http, userService, feeService, $timeout, $filter) {
 
     $scope.sending = false;
     $scope.passmode = false;
@@ -123,7 +123,7 @@ angular.module('liskApp').controller('sendTransactionController',
     }
 
     $scope.getCurrentFee = function () {
-        $http.get('/api/blocks/getFee').then(function (resp) {
+        $http.get(riseAPI.nodeAddress+'/api/blocks/getFee').then(function (resp) {
                 $scope.currentFee = resp.data.fee;
                 $scope.fee = resp.data.fee;
             });
@@ -148,7 +148,7 @@ angular.module('liskApp').controller('sendTransactionController',
         }
 
         if (amount == '') {
-            return error('RISE amount can not be blank');
+            return error('BBN amount can not be blank');
         }
 
         if (parts.length == 1) {
@@ -156,7 +156,7 @@ angular.module('liskApp').controller('sendTransactionController',
             fraction = '00000000';
         } else if (parts.length == 2) {
             if (parts[1].length > 8) {
-                return error('RISE amount must not have more than 8 decimal places');
+                return error('BBN amount must not have more than 8 decimal places');
             } else if (parts[1].length <= 8) {
                 // Less than eight decimal places
                 fraction = parts[1];
@@ -165,7 +165,7 @@ angular.module('liskApp').controller('sendTransactionController',
                 fraction = parts[1].substring(0, 8);
             }
         } else {
-            return error('RISE amount must have only one decimal point');
+            return error('BBN amount must have only one decimal point');
         }
 
         // Pad to eight decimal places
@@ -175,7 +175,7 @@ angular.module('liskApp').controller('sendTransactionController',
 
         // Check for zero amount
         if (amount == '0' && fraction == '00000000') {
-            return error('RISE amount can not be zero');
+            return error('BBN amount can not be zero');
         }
 
         // Combine whole with fractional part
@@ -184,7 +184,7 @@ angular.module('liskApp').controller('sendTransactionController',
         // In case there's a comma or something else in there.
         // At this point there should only be numbers.
         if (!/^\d+$/.test(result)) {
-            return error('RISE amount contains non-numeric characters');
+            return error('BBN amount contains non-numeric characters');
         }
 
         // Remove leading zeroes

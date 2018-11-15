@@ -1,10 +1,10 @@
 require('angular');
 
-angular.module('liskApp').service('transactionsService', function ($http, userService) {
+angular.module('liskApp').service('transactionsService', function ($http, riseAPI, userService) {
 
     var transactionsList = {
         requestTransactions: function (params, cb) {
-            $http.get("/api/transactions", {
+            $http.get(riseAPI.nodeAddress+"/api/transactions", {
                 params: params
             }).then(function (response) {
                 if (response.data.success) {
@@ -15,7 +15,7 @@ angular.module('liskApp').service('transactionsService', function ($http, userSe
             });
         },
         getTransaction: function (transactionId, cb) {
-            $http.get("/api/transactions/get", {
+            $http.get(riseAPI.nodeAddress+"/api/transactions/get", {
                 params: {
                     id: transactionId
                 }
@@ -48,7 +48,7 @@ angular.module('liskApp').service('transactionsService', function ($http, userSe
             requestParams.limit = params.count();
             requestParams.offset = (params.page() - 1) * params.count()
 
-            $http.get("/api/transactions", {
+            $http.get(riseAPI.nodeAddress+"/api/transactions", {
                 params: requestParams
             }).then(function (response) {
                 if (response.data.success) {

@@ -5,13 +5,13 @@
             <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0" cellspacing="0">
                 <tr ng-repeat="transaction in $data">
                     <td data-title="tableTransactions.cols.wallet" class="pointer">
-                        <a href="#">{{transaction.wallet}}</a>
+                        <a>{{transaction.wallet}}</a>
                     </td>
                     <td data-title="tableTransactions.cols.t_id" class="pointer">
-                        <a href="#" ng-click="transactionInfo(transaction, transaction.signList)">{{transaction.t_id}}</a>
+                        <a ng-click="transactionInfo(transaction, transaction.signList)">{{transaction.t_id}}</a>
                     </td>
                     <td data-title="tableTransactions.cols.t_recipientId" class="pointer" sortable="'t_recipientId'">
-                        <a href="#" ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId}}</a>
+                        <a ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId}}</a>
                     </td>
                     <td data-title="tableTransactions.cols.t_timestamp" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter : showFullTime}}
                     </td>

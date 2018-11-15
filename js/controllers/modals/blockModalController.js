@@ -1,11 +1,11 @@
 require('angular');
 
-angular.module('liskApp').controller('blockModalController', ["$scope", "$http", "blockModal", "userInfo", function ($scope, $http, blockModal, userInfo) {
+angular.module('liskApp').controller('blockModalController', ["$scope", "$http", 'riseAPI', "blockModal", "userInfo", function ($scope, $http, riseAPI, blockModal, userInfo) {
 
     $scope.loading = true;
     $scope.transactions = [];
     $scope.getTransactionsOfBlock = function (blockId) {
-        $http.get("/api/transactions/", {params: {blockId: blockId}})
+        $http.get(riseAPI.nodeAddress+"/api/transactions/", {params: {blockId: blockId}})
             .then(function (resp) {
                 $scope.transactions = resp.data.transactions;
                 $scope.loading = false;

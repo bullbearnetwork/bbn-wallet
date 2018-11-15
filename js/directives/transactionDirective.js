@@ -2,6 +2,6 @@ require('angular');
 
 angular.module('liskApp').directive('transactionBlock', function () {
     return {
-        templateUrl: '/templates/particials/directives/transactionBlock.html'
+        templateUrl: 'templates/partials/directives/transactionBlock.html'
     };
 })

@@ -1,7 +1,7 @@
 require('angular');
 
 angular.module('liskApp').controller('passphraseController', ['ledgerConfirmAddressModal', 'ledgerNano', 'BBNOffline', 'riseAPI', '$scope', '$rootScope', '$http', "$state", "userService", "newUser", 'gettextCatalog', '$cookies',
-  function (ledgerConfirmAddressModal, ledgerNano, BBNOffline, rise, $rootScope, $scope, $http, $state, userService, newUser, gettextCatalog, $cookies) {
+  function (ledgerConfirmAddressModal, ledgerNano, BBNOffline, riseAPI, $rootScope, $scope, $http, $state, userService, newUser, gettextCatalog, $cookies) {
 
     userService.setData();
     userService.rememberPassphrase = false;
@@ -41,7 +41,7 @@ angular.module('liskApp').controller('passphraseController', ['ledgerConfirmAddr
             $rootScope.usingLedger  = false;
         });
     function walletLogin(wallet, remember) {
-      rise.accounts.getAccount(wallet.address)
+      riseAPI.accounts.getAccount(wallet.address)
         .catch(function (ac) {
           if (ac.message === 'Account not found') {
             return {

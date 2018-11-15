@@ -1,8 +1,13 @@
 require('angular');
 
-angular.module('liskApp').factory('serverSocket', ["socketFactory", "$location", function (socketFactory, $location) {
+angular.module('liskApp').factory('serverSocket', ["socketFactory", "$location", 'riseAPI', function (socketFactory, $location, riseAPI) {
 
-    var newIoSocket = io.connect($location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : ''));
+    var newIoSocket;
+    if (riseAPI.nodeAddress !== '') {
+      newIoSocket = io.connect(riseAPI.nodeAddress);
+    } else {
+      newIoSocket = io.connect($location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : ''));
+    }
     serverSocket = socketFactory({
         ioSocket: newIoSocket
     });

@@ -33,7 +33,7 @@ angular.module('liskApp').controller('secondPassphraseModalController',
 
     $scope.savePassToFile = function (pass) {
         var blob = new Blob([pass], { type: "text/plain;charset=utf-8" });
-        FS.saveAs(blob, "RiseSecondPassphrase.txt");
+        FS.saveAs(blob, "BBNSecondPassphrase.txt");
     }
 
     $scope.confirmNewPassphrase = function () {

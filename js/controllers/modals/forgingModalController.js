@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('liskApp').controller('forgingModalController', ["$scope", "forgingModal", "$http", "userService", 'gettextCatalog', function ($scope, forgingModal, $http, userService, gettextCatalog) {
+angular.module('liskApp').controller('forgingModalController',
+  ["$scope", "forgingModal", "riseAPI", "userService", 'gettextCatalog',
+    function ($scope, forgingModal, riseAPI, userService, gettextCatalog) {
 
     $scope.error = null;
     $scope.sending = false;
@@ -38,24 +40,26 @@ angular.module('liskApp').controller('forgingModalController', ["$scope", "forgi
 
         if (!$scope.sending) {
             $scope.sending = true;
+          riseAPI.delegates.toggleForging({
+            enable: true,
+            secret: $scope.secretPhrase
+          })
+            .catch(function (error) {
+              $scope.error = error.message;
+              userService.setForging(false);
+              $scope.forging = falses;
+            })
+            .then(function (resp) {
+              userService.setForging(resp.success);
+              $scope.forging = resp.success;
+              $scope.sending = false;
+              if ($scope.destroy) {
+                $scope.destroy(resp.data.success);
+              }
 
-            $http.post("/api/delegates/forging/enable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
-                .then(function (resp) {
-                    userService.setForging(resp.data.success);
-                    $scope.forging = resp.data.success;
-                    $scope.sending = false;
-
-                    if (resp.data.success) {
-                        if ($scope.destroy) {
-                            $scope.destroy(resp.data.success);
-                        }
-
-                        Materialize.toast('Forging enabled', 3000, 'green white-text');
-                        forgingModal.deactivate();
-                    } else {
-                        $scope.error = resp.data.error;
-                    }
-                });
+              Materialize.toast('Forging enabled', 3000, 'green white-text');
+              forgingModal.deactivate();
+            });
         }
     }
 
@@ -64,24 +68,26 @@ angular.module('liskApp').controller('forgingModalController', ["$scope", "forgi
 
         if (!$scope.sending) {
             $scope.sending = true;
+          riseAPI.delegates.toggleForging({
+            enable: false,
+            secret: $scope.secretPhrase
+          })
+            .catch(function (error) {
+              $scope.error = error.message;
+              userService.setForging(true);
+              $scope.forging = true;
+            })
+            .then(function (resp) {
+              userService.setForging(!resp.success);
+              $scope.forging = !resp.success;
+              $scope.sending = false;
+              if ($scope.destroy) {
+                $scope.destroy(resp.data.success);
+              }
 
-            $http.post("/api/delegates/forging/disable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
-                .then(function (resp) {
-                    userService.setForging(!resp.data.success);
-                    $scope.forging = !resp.data.success;
-                    $scope.sending = false;
-
-                    if (resp.data.success) {
-                        if ($scope.destroy) {
-                            $scope.destroy(!resp.data.success);
-                        }
-
-                        Materialize.toast('Forging disabled', 3000, 'red white-text');
-                        forgingModal.deactivate();
-                    } else {
-                        $scope.error = resp.data.error;
-                    }
-                });
+              Materialize.toast('Forging enabled', 3000, 'green white-text');
+              forgingModal.deactivate();
+            });
         }
     }
 

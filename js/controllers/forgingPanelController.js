@@ -1,11 +1,11 @@
 require('angular');
 
-angular.module('liskApp').controller('forgingPanelController', ['$scope', '$http', function ($scope, $http) {
+angular.module('liskApp').controller('forgingPanelController', ['$scope', '$http', 'riseAPI', function ($scope, $http, riseAPI) {
 
     $scope.buttonType = "submit";
 
     $scope.getForgingInfo = function () {
-      $http.get("/api/forging").then(function (resp) {
+      $http.get(riseAPI.nodeAddress+"/api/forging").then(function (resp) {
         $scope.forgingEnabled = resp.data.enabled;
 
         if ($scope.forgingEnabled) {
@@ -24,7 +24,7 @@ angular.module('liskApp').controller('forgingPanelController', ['$scope', '$http
         return;
       }
 
-      $http.post("/api/forging/enable", {
+      $http.post(riseAPI.nodeAddress+"/api/forging/enable", {
         secret: pass,
         saveToConfig: $scope.saveToConfig
       }).then(function (resp) {
@@ -43,7 +43,7 @@ angular.module('liskApp').controller('forgingPanelController', ['$scope', '$http
         alert("Provide secret passphrase");
         return;
       }
-      $http.post("/api/forging/disable", {
+      $http.post(riseAPI.nodeAddress+"/api/forging/disable", {
         secret: pass
       }).then(function (resp) {
         if (resp.data.success) {

@@ -121,7 +121,7 @@
                 <tr ng-repeat="block in $data">
                     <td data-title="tableBlocks.cols.height" sortable="'height'">{{block.height}}</td>
                     <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer" ng-show="showAllColumns">
-                        <a href="#">{{block.id}}</a>
+                        <a>{{block.id}}</a>
                     </td>
                     <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'">
                         <span ng-show="block.timestamp > 0">{{block.timestamp | timeAgoFilter : showFullTime}}</span>

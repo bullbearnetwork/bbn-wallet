@@ -13,7 +13,7 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
     $scope.diffVersion = 0;
     $scope.subForgingCollapsed = true;
     $scope.categories = {};
-    $scope.dataToShow = {forging: false}
+    $scope.dataToShow = {forging: false};
     $scope.fees = {
       send           : 10000000,
       vote           : 100000000,
@@ -100,6 +100,7 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
         'main.votes',
         'main.forging',
         'main.blockchain',
+        'main.faucet',
         'passphrase',
         // 'main.dappstore',
         'main.multi'
@@ -163,48 +164,50 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
     $scope.resetAppData();
 
     $scope.getAppData = function () {
-        $http.get("/api/accounts", {params: {address: userService.address}})
-            .then(function (resp) {
-                var account = resp.data.account;
-                if (!account) {
-                    userService.balance = 0;
-                    userService.unconfirmedBalance = 0;
-                    userService.secondPassphrase = '';
-                    userService.unconfirmedPassphrase = '';
-                } else {
-                    userService.balance = account.balance;
-                    userService.unconfirmedBalance = account.unconfirmedBalance;
-                    userService.multisignatures = account.multisignatures;
-                    userService.u_multisignatures = account.u_multisignatures;
-                    userService.secondPassphrase = account.secondSignature || account.unconfirmedSignature;
-                    userService.unconfirmedPassphrase = account.unconfirmedSignature;
+      riseAPI.accounts.getAccount(userService.address)
+        .then(function (response) {
+          var account = response.account;
+          if (!account) {
+            throw new Error('not in blockchain');
+          }
+          userService.balance = account.balance;
+          userService.unconfirmedBalance = account.unconfirmedBalance;
+          userService.multisignatures = account.multisignatures;
+          userService.u_multisignatures = account.u_multisignatures;
+          userService.secondPassphrase = account.secondSignature || account.unconfirmedSignature;
+          userService.unconfirmedPassphrase = account.unconfirmedSignature;
+        })
+        .catch(function () {
+          userService.balance = 0;
+          userService.unconfirmedBalance = 0;
+          userService.secondPassphrase = '';
+          userService.unconfirmedPassphrase = '';
+        })
+        .then(function () {
+          $scope.balance = userService.balance;
+          $scope.unconfirmedBalance = userService.unconfirmedBalance;
+          $scope.secondPassphrase = userService.secondPassphrase;
+          $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
+          $scope.delegateInRegistration = userService.delegateInRegistration;
 
-                }
+          if ($state.current.name != 'passphrase') {
+            $scope.multisignature = false;
+          }
 
-                $scope.balance = userService.balance;
-                $scope.unconfirmedBalance = userService.unconfirmedBalance;
-                $scope.secondPassphrase = userService.secondPassphrase;
-                $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
-                $scope.delegateInRegistration = userService.delegateInRegistration;
+          if ($state.current.name == 'main.dashboard' || $state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
+            $scope.getForging($scope.setForgingText);
+            $scope.getDelegate();
+          }
 
-                if ($state.current.name != 'passphrase') {
-                    $scope.multisignature = false;
-                }
+          if ($state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
+            $scope.getMyVotesCount();
+            $scope.getForging($scope.setForgingText);
+          }
 
-                if ($state.current.name == 'main.dashboard' || $state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
-                    $scope.getForging($scope.setForgingText);
-                    $scope.getDelegate();
-                }
-
-                if ($state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
-                    $scope.getMyVotesCount();
-                    $scope.getForging($scope.setForgingText);
-                }
-
-                if ($state.current.name == 'main.dappstore' || 'main.dashboard') {
-                    $scope.getCategories();
-                }
-            });
+          if ($state.current.name == 'main.dappstore' || 'main.dashboard') {
+            $scope.getCategories();
+          }
+        })
     };
 
     $scope.getMasterPassphrase = function () {
@@ -231,25 +234,25 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
 
     $scope.enableForging = function () {
         if ($scope.rememberedPassphrase) {
-            $http.post("/api/delegates/forging/enable", {
-                secret: $scope.rememberedPassphrase,
-                publicKey: userService.publicKey
+            riseAPI.delegates.toggleForging({
+              secret: $scope.rememberedPassphrase,
+              enable: true
             })
-                .then(function (resp) {
-                    if (resp.data.success) {
-                        userService.setForging(resp.data.success);
-                        $scope.forging = resp.data.success;
-                        $scope.dataToShow.forging = $scope.forging;
-                    } else {
-                        $scope.errorModal = errorModal.activate({
-                            error: resp.data.error,
-                            destroy: function () {
-                                $scope.forging = false;
-                                $scope.dataToShow.forging = $scope.forging;
-                            }
-                        })
-                    }
-                });
+              .catch(function (error) {
+                $scope.errorModal = errorModal.activate({
+                  error  : error.message,
+                  destroy: function () {
+                    $scope.forging            = false;
+                    $scope.dataToShow.forging = $scope.forging;
+                  }
+                })
+              })
+              .then(function (resp) {
+                userService.setForging(resp.success);
+                $scope.forging            = resp.success;
+                $scope.dataToShow.forging = $scope.forging;
+
+              });
         } else {
             $scope.forgingModal = forgingModal.activate({
                 forging: false,
@@ -269,25 +272,23 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
         if ($scope.rememberedPassphrase) {
 
             $scope.error = null;
-
-            $http.post("/api/delegates/forging/disable", {
-                secret: $scope.rememberedPassphrase,
-                publicKey: userService.publicKey
+            riseAPI.delegates.toggleForging({
+              secret: $scope.rememberedPassphrase,
+              enable: false
             })
+              .catch(function (err) {
+                $scope.errorModal = errorModal.activate({
+                  error: err.message,
+                  destroy: function () {
+                    $scope.forging = true;
+                    $scope.dataToShow.forging = $scope.forging;
+                  }
+                })
+              })
                 .then(function (resp) {
-                    if (resp.data.success) {
-                        userService.setForging(!resp.data.success);
-                        $scope.forging = !resp.data.success;
-                        $scope.dataToShow.forging = $scope.forging;
-                    } else {
-                        $scope.errorModal = errorModal.activate({
-                            error: resp.data.error,
-                            destroy: function () {
-                                $scope.forging = true;
-                                $scope.dataToShow.forging = $scope.forging;
-                            }
-                        })
-                    }
+                  userService.setForging(!resp.success);
+                  $scope.forging            = !resp.success;
+                  $scope.dataToShow.forging = $scope.forging;
                 });
         } else {
             $scope.forgingModal = forgingModal.activate({
@@ -350,39 +351,33 @@ angular.module('liskApp').controller('appController', ['riseAPI', 'dappsService'
             $scope.delegate = response;
             userService.setDelegate($scope.delegate);
             if (!response.noDelegate) {
-                $http.get("/api/transactions", {
-                    params: {
-                        senderPublicKey: userService.publicKey,
-                        limit: 1,
-                        type: 2
-                    }
-                }).then(function (response) {
-                    if (response.data.success) {
-                        userService.setDelegateTime(response.data.transactions);
-                    } else {
-                        userService.setDelegateTime([{timestamp: null}]);
-                    }
-                });
+              riseAPI.transactions.getList({
+                senderPublicKey: userService.publicKey,
+                limit: 1,
+                type: 2
+              }).then(function (response) {
+                userService.setDelegateTime(response.transactions);
+              }).catch(function() {
+                userService.setDelegateTime([{timestamp: null}]);
+              });
             }
         });
     }
 
     $scope.getSync = function () {
-        $http.get("/api/loader/status/sync").then(function (resp) {
-            if (resp.data.success) {
-                $scope.syncState = (resp.data.syncing && resp.data.blocks) ? Math.floor(100 * resp.data.height / resp.data.blocks) : null;
-                if ($scope.syncState != undefined) {
-                    $scope.loading.values = [resp.data.height, Math.abs(resp.data.blocks - resp.data.height)];
-                }
+        riseAPI.loader.syncStatus().then(function (resp) {
+            $scope.syncState = (resp.syncing && resp.blocks) ? Math.floor(100 * resp.height / resp.blocks) : null;
+            if ($scope.syncState != undefined) {
+                $scope.loading.values = [resp.height, Math.abs(resp.blocks - resp.data.height)];
             }
         });
     }
 
     $scope.getMyVotesCount = function () {
-        $http.get("/api/accounts/delegates/", {params: {address: userService.address}})
-            .then(function (response) {
-                $scope.myVotesCount = response.data.delegates ? response.data.delegates.length : 0;
-            });
+        riseAPI.accounts.getDelegates(userService.address)
+          .then(function (response) {
+            $scope.myVotesCount = response.delegates ? response.delegates.length : 0;
+          });
     }
 
     $scope.myUserInfo = function () {

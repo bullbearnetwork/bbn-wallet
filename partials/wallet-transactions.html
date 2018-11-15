@@ -6,10 +6,10 @@
                 <tr ng-repeat="transaction in $data">
                     <td data-title="tableWalletTransactions.cols.height" sortable="'height'">{{transaction.height}}</td>
                     <td data-title="tableWalletTransactions.cols.id" sortable="'id'" class="pointer">
-                        <a href="#" ng-click="transactionInfo(transaction, transaction.signList)">{{transaction.id}}</a>
+                        <a ng-click="transactionInfo(transaction, transaction.signList)">{{transaction.id}}</a>
                     </td>
                     <td data-title="tableWalletTransactions.cols.recipientId" class="pointer" sortable="'recipientId'">
-                        <a href="#" ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId}}</a>
+                        <a ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId}}</a>
                     </td>
                     <td data-title="tableWalletTransactions.cols.timestamp" sortable="'timestamp'">{{transaction.timestamp | timeAgoFilter : showFullTime}}
                     </td>

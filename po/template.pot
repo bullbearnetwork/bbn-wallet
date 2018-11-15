@@ -40,7 +40,7 @@ msgid "Add group members by typing in their BBN address and pressing enter."
 msgstr ""
 
 #: js/controllers/blockchainController.js:45
-#: js/controllers/transactionsController.js:66
+#: js/controllers/transactionsController.js:68
 #: js/controllers/walletPendingsController.js:47
 #: js/controllers/walletTransactionsController.js:70
 #: js/controllers/walletsController.js:148
@@ -57,9 +57,9 @@ msgstr ""
 msgid "Applications"
 msgstr ""
 
-#: js/controllers/delegatesController.js:193
+#: js/controllers/delegatesController.js:194
 #: js/controllers/forgingController.js:64
-#: js/controllers/votedDelegatesController.js:132
+#: js/controllers/votedDelegatesController.js:134
 #: partials/forging.html:75
 msgid "Approval"
 msgstr ""
@@ -68,11 +68,15 @@ msgstr ""
 msgid "Are you sure you want to delete this item?"
 msgstr ""
 
+#: index-electron.html:12
 #: index.html:12
-#: wallet.html:12
 msgid "BBN - The Trader's blockchain"
 msgstr ""
 
+#: js/controllers/delegatesController.js:150
+#: js/controllers/delegatesController.js:192
+#: js/controllers/votedDelegatesController.js:132
+#: js/controllers/walletPendingsController.js:43
 #: partials/modals/multisignatureModal.html:52
 msgid "BBN Address"
 msgstr ""
@@ -91,6 +95,10 @@ msgstr ""
 
 #: partials/forging.html:17
 msgid "BBN Earned"
+msgstr ""
+
+#: partials/template.html:74
+msgid "BBN Faucet"
 msgstr ""
 
 #: partials/modals/userInfo.html:39
@@ -305,7 +313,7 @@ msgstr ""
 msgid "DOWNLOAD"
 msgstr ""
 
-#: js/controllers/accountController.js:8
+#: js/controllers/accountController.js:9
 #: partials/template.html:68
 msgid "Dashboard"
 msgstr ""
@@ -324,11 +332,11 @@ msgid "Description"
 msgstr ""
 
 #: js/controllers/modals/errorModalController.js:10
-#: js/controllers/modals/forgingModalController.js:11
+#: js/controllers/modals/forgingModalController.js:13
 msgid "Disable Forging"
 msgstr ""
 
-#: js/controllers/appController.js:315
+#: js/controllers/appController.js:316
 msgid "Disabled"
 msgstr ""
 
@@ -341,11 +349,11 @@ msgid "Empty passphrase"
 msgstr ""
 
 #: js/controllers/modals/errorModalController.js:12
-#: js/controllers/modals/forgingModalController.js:13
+#: js/controllers/modals/forgingModalController.js:15
 msgid "Enable Forging"
 msgstr ""
 
-#: js/controllers/appController.js:315
+#: js/controllers/appController.js:316
 msgid "Enabled"
 msgstr ""
 
@@ -370,7 +378,7 @@ msgstr ""
 
 #: js/controllers/blockchainController.js:46
 #: js/controllers/forgingController.js:125
-#: js/controllers/transactionsController.js:67
+#: js/controllers/transactionsController.js:69
 #: js/controllers/walletPendingsController.js:48
 #: js/controllers/walletTransactionsController.js:71
 #: js/controllers/walletsController.js:149
@@ -391,9 +399,9 @@ msgstr ""
 msgid "Forged Blocks"
 msgstr ""
 
-#: js/controllers/delegatesController.js:9
+#: js/controllers/delegatesController.js:10
 #: js/controllers/forgingController.js:83
-#: js/controllers/votedDelegatesController.js:8
+#: js/controllers/votedDelegatesController.js:10
 #: partials/template.html:224
 #: partials/template.html:86
 msgid "Forging"
@@ -449,7 +457,7 @@ msgstr ""
 
 #: js/controllers/blockchainController.js:40
 #: js/controllers/forgingController.js:122
-#: js/controllers/transactionsController.js:61
+#: js/controllers/transactionsController.js:63
 #: js/controllers/walletTransactionsController.js:66
 #: partials/modals/blockInfo.html:26
 msgid "Height"
@@ -522,12 +530,12 @@ msgstr ""
 msgid "Loading blockchain"
 msgstr ""
 
-#: js/controllers/accountController.js:7
+#: js/controllers/accountController.js:8
 msgid "Loading dashboard"
 msgstr ""
 
-#: js/controllers/delegatesController.js:7
-#: js/controllers/votedDelegatesController.js:7
+#: js/controllers/delegatesController.js:8
+#: js/controllers/votedDelegatesController.js:9
 msgid "Loading delegates"
 msgstr ""
 
@@ -535,7 +543,7 @@ msgstr ""
 msgid "Loading forging status"
 msgstr ""
 
-#: js/controllers/transactionsController.js:7
+#: js/controllers/transactionsController.js:9
 #: js/controllers/walletPendingsController.js:7
 msgid "Loading transactions"
 msgstr ""
@@ -587,7 +595,6 @@ msgstr ""
 
 #: js/controllers/walletsController.js:8
 #: partials/settings.html:12
-#: partials/template.html:74
 msgid "Multi-Signature"
 msgstr ""
 
@@ -637,9 +644,9 @@ msgstr ""
 msgid "NO"
 msgstr ""
 
-#: js/controllers/delegatesController.js:148
-#: js/controllers/delegatesController.js:190
-#: js/controllers/votedDelegatesController.js:129
+#: js/controllers/delegatesController.js:149
+#: js/controllers/delegatesController.js:191
+#: js/controllers/votedDelegatesController.js:131
 msgid "Name"
 msgstr ""
 
@@ -803,14 +810,14 @@ msgstr ""
 msgid "REMOVE VOTE"
 msgstr ""
 
-#: js/controllers/delegatesController.js:189
+#: js/controllers/delegatesController.js:190
 #: js/controllers/forgingController.js:41
-#: js/controllers/votedDelegatesController.js:128
+#: js/controllers/votedDelegatesController.js:130
 #: partials/forging.html:56
 msgid "Rank"
 msgstr ""
 
-#: js/controllers/transactionsController.js:64
+#: js/controllers/transactionsController.js:66
 #: js/controllers/walletPendingsController.js:45
 #: js/controllers/walletTransactionsController.js:68
 #: js/controllers/walletsController.js:146
@@ -846,13 +853,6 @@ msgstr ""
 #: js/controllers/forgingController.js:126
 #: partials/modals/blockInfo.html:29
 msgid "Reward"
-msgstr ""
-
-#: js/controllers/delegatesController.js:149
-#: js/controllers/delegatesController.js:191
-#: js/controllers/votedDelegatesController.js:130
-#: js/controllers/walletPendingsController.js:43
-msgid "Rise Address"
 msgstr ""
 
 #: partials/modals/newUser.html:36
@@ -913,7 +913,7 @@ msgstr ""
 msgid "Send BBN"
 msgstr ""
 
-#: js/controllers/transactionsController.js:63
+#: js/controllers/transactionsController.js:65
 #: partials/account.html:70
 msgid "Sender"
 msgstr ""
@@ -1015,7 +1015,7 @@ msgstr ""
 
 #: js/controllers/blockchainController.js:43
 #: js/controllers/forgingController.js:124
-#: js/controllers/transactionsController.js:65
+#: js/controllers/transactionsController.js:67
 #: js/controllers/walletPendingsController.js:46
 #: js/controllers/walletTransactionsController.js:69
 #: js/controllers/walletsController.js:147
@@ -1062,7 +1062,7 @@ msgstr ""
 msgid "Transaction"
 msgstr ""
 
-#: js/controllers/transactionsController.js:62
+#: js/controllers/transactionsController.js:64
 #: js/controllers/walletPendingsController.js:44
 #: js/controllers/walletTransactionsController.js:67
 #: js/controllers/walletsController.js:145
@@ -1074,8 +1074,8 @@ msgid "Transaction ID"
 msgstr ""
 
 #: js/controllers/blockchainController.js:44
-#: js/controllers/transactionsController.js:8
-#: js/controllers/walletTransactionsController.js:6
+#: js/controllers/transactionsController.js:10
+#: js/controllers/walletTransactionsController.js:8
 #: partials/modals/blockInfo.html:20
 #: partials/modals/blockModal.html:7
 #: partials/modals/userInfo.html:52
@@ -1098,9 +1098,9 @@ msgstr ""
 msgid "USD Equivalent"
 msgstr ""
 
-#: js/controllers/delegatesController.js:192
+#: js/controllers/delegatesController.js:193
 #: js/controllers/forgingController.js:53
-#: js/controllers/votedDelegatesController.js:131
+#: js/controllers/votedDelegatesController.js:133
 msgid "Uptime"
 msgstr ""
 

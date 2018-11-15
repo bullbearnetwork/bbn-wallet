@@ -4,7 +4,7 @@
             <div class="col-md-9 col-md-offset-2 height100 valign-wrapper">
                 <div class="modal-content">
                     <div class="modal-header clearfix">
-                        <img class="account" src="/images/account.png">
+                        <img class="account" src="images/account.png">
 
                         <h2 class="media-heading">{{'Account'|translate}}</h2>
 
@@ -86,12 +86,12 @@
                                         </div>
                                         <div class="transaction-path">
                                             <div class="transaction-part pull-left">
-                                                <a href="#" class="blue-link" ng-click="getAccountDetail(transaction.senderId)">{{transaction.senderId}}</a>
+                                                <a class="blue-link" ng-click="getAccountDetail(transaction.senderId)">{{transaction.senderId}}</a>
                                                 <span class="lisk">{{transaction.amount | liskFilter}} BBN</span>
                                             </div>
                                             <div class="transaction-direction"></div>
                                             <div class="transaction-part pull-right">
-                                                <a href="#" class="blue-link" ng-click="getAccountDetail(transaction.recipientId)">{{transaction.recipientId
+                                                <a class="blue-link" ng-click="getAccountDetail(transaction.recipientId)">{{transaction.recipientId
                                                 || ""}}</a>
                                                 <span class="lisk">{{transaction.amount | liskFilter}} BBN</span>
                                             </div>

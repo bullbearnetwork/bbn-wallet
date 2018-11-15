@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('liskApp').controller('walletTransactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', '$filter', 'multiMembersModal', '$stateParams', 'multiService', 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, $filter, multiMembersModal, $stateParams, multiService, gettextCatalog) {
+angular.module('liskApp').controller('walletTransactionsController',
+  ['$scope', '$rootScope', '$http', 'riseAPI', "userService", "$interval", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', '$filter', 'multiMembersModal', '$stateParams', 'multiService', 'gettextCatalog',
+    function ($rootScope, $scope, $http, riseAPI, userService, $interval, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, $filter, multiMembersModal, $stateParams, multiService, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.page = {title: gettextCatalog.getString('Transactions'), previous: 'main.multi'};
@@ -22,21 +24,19 @@ angular.module('liskApp').controller('walletTransactionsController', ['$scope', 
 
     $scope.getParams = function () {
 
-        $http.get("/api/accounts?address=" + $scope.walletAddress)
+        riseAPI.accounts.getAccount($scope.walletAddress)
             .then(function (response) {
-
-                if (response.data.success) {
-                    $scope.requestParams = {
-                        ownerPublicKey: response.data.account.publicKey,
-                        ownerAddress: response.data.account.address,
-                        recipientId: response.data.account.address,
-                        senderId: response.data.account.address
-                    };
-                    $scope.updateTransactions();
-                } else {
-                    console.warn('Failed to get account: ' + $scope.walletAddress);
-                }
-            });
+                $scope.requestParams = {
+                    ownerPublicKey: response.account.publicKey,
+                    ownerAddress: response.account.address,
+                    recipientId: response.account.address,
+                    senderId: response.account.address
+                };
+                $scope.updateTransactions();
+            })
+          .catch(function (err) {
+              console.log(err);
+          });
 
     }();
 

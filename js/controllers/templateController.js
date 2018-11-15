@@ -1,16 +1,15 @@
 require('angular');
 
-angular.module('liskApp').controller('templateController', ['$scope', '$rootScope', '$http', 'userService', "$interval", 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, gettextCatalog) {
+angular.module('liskApp').controller('templateController', ['$scope', '$rootScope', 'riseAPI', 'userService', "$interval", 'gettextCatalog', function ($rootScope, $scope, riseAPI, userService, $interval, gettextCatalog) {
 
     $scope.getInitialSync = function () {
-        $http.get("/api/loader/status/sync").then(function (resp) {
-            if (resp.data.success) {
-                $rootScope.syncing = resp.data.syncing;
-                $rootScope.height = resp.data.height;
-                $rootScope.heightToSync = resp.data.blocks;
-            }
-        });
-    }
+        riseAPI.loader.syncStatus()
+          .then(function (resp) {
+            $rootScope.syncing = resp.syncing;
+            $rootScope.height = resp.height;
+            $rootScope.heightToSync = resp.blocks;
+          });
+    };
 
     $scope.syncInterval = $interval(function () {
         $scope.getInitialSync();

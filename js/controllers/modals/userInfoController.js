@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('liskApp').controller('userInfoController', ["$scope", "$http", "userInfo", "userService","sendTransactionModal", function ($scope, $http, userInfo, userService, sendTransactionModal) {
+angular.module('liskApp').controller('userInfoController',
+  ["$scope", "$http", 'riseAPI', "userInfo", "userService","sendTransactionModal",
+    function ($scope, $http, riseAPI, userInfo, userService, sendTransactionModal) {
 
     $scope.userIdOld = '';
     $scope.thisUser = userService;
@@ -21,14 +23,14 @@ angular.module('liskApp').controller('userInfoController', ["$scope", "$http", "
         }
         $scope.userIdOld = userId;
         $scope.transactions = { view: false, list: [] };
-        $http.get("/api/accounts", { params: { address: userId }})
+        $http.get(riseAPI.nodeAddress+"/api/accounts", { params: { address: userId }})
         .then(function (resp) {
             if (resp.data.account) {
                 $scope.account = resp.data.account;
             } else {
                 $scope.account = { address: userId, publicKey: null };
             }
-            $http.get("/api/transactions", {
+            $http.get(riseAPI.nodeAddress+"/api/transactions", {
                 params: {
                     senderPublicKey: $scope.account.publicKey,
                     recipientId: $scope.account.address,
@@ -39,7 +41,7 @@ angular.module('liskApp').controller('userInfoController', ["$scope", "$http", "
             .then(function (resp) {
                 var transactions = resp.data.transactions;
 
-                $http.get('/api/transactions/unconfirmed', {
+                $http.get(riseAPI.nodeAddress+'/api/transactions/unconfirmed', {
                     params: {
                         senderPublicKey: $scope.account.publicKey,
                         address: $scope.account.address

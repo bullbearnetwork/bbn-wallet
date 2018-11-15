@@ -37,12 +37,12 @@
                     </div>
                     <div class="transaction-path">
                         <div class="transaction-part pull-left">
-                            <a href="#" class="blue-link" ng-click="userInfo(block.recipientId)">{{block.senderId}}</a>
+                            <a class="blue-link" ng-click="userInfo(block.recipientId)">{{block.senderId}}</a>
                             <span class="lisk">{{block.amount | liskFilter}} BBN</span>
                         </div>
                         <div class="transaction-direction"></div>
                         <div class="transaction-part pull-right">
-                            <a href="#" class="blue-link" ng-click="userInfo(block.recipientId)">{{block.recipientId || ""}}</a>
+                            <a class="blue-link" ng-click="userInfo(block.recipientId)">{{block.recipientId || ""}}</a>
                             <span class="lisk">{{block.amount | liskFilter}} BBN</span>
                         </div>
                     </div>

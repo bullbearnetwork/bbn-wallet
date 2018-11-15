@@ -56,7 +56,7 @@
     <div id="sidebar-wrapper">
         <div class="account-block">
             <div class="icon">
-                <img src="/images/account.png" alt="Account">
+                <img src="images/account.png" alt="Account">
             </div>
             <span class="address">Your address: <br /><b>{{address}}</b></span>
         </div>
@@ -68,10 +68,10 @@
                     <span class="menu-text"><translate>Dashboard</translate></span>
                 </a>
             </li>
-            <li ng-show="showMenuItem('main.multi') && multisignature" ui-sref-active="active">
-                <a ui-sref="main.multi" class="waves-effect waves-blue">
+            <li ng-show="showMenuItem('main.faucet')" ui-sref-active="active">
+                <a ui-sref="main.faucet" class="waves-effect waves-blue">
                     <div class="nav-icon" id="multi-icon"></div>
-                    <span class="menu-text"><translate>Multi-Signature</translate></span>
+                    <span class="menu-text"><translate>BBN Faucet</translate></span>
                 </a>
             </li>
             <li ng-show="showMenuItem('main.conversations')" ui-sref-active="active">
@@ -128,7 +128,7 @@
                     </span>
                     {{view.page.title}}
                 </h1>
-                <span class="forging-state" ng-class="{'disabled': !forgingEnabled}" ng-if="forgingStatus && view.bar.forgingMenu">{{forgingStatus}}</span>
+                <!--<span class="forging-state" ng-class="{'disabled': !forgingEnabled}" ng-if="forgingStatus && view.bar.forgingMenu">{{forgingStatus}}</span>-->
             </div>
             <div id="top-menu">
                 <span id="balance">
@@ -146,16 +146,16 @@
                     <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="#" ng-click="myUserInfo()"><translate>My Profile</translate></a>
+                            <a ng-click="myUserInfo()"><translate>My Profile</translate></a>
                         </li>
                         <li ng-if="!secondPassphrase && !usingLedger">
-                            <a href="#" ng-click="setSecondPassphrase()"><translate>2nd Passphrase</translate></a>
+                            <a ng-click="setSecondPassphrase()"><translate>2nd Passphrase</translate></a>
                         </li>
                         <li>
                             <a ui-sref="main.settings"><translate>Settings</translate></a>
                         </li>
                         <li>
-                            <a href="/"><translate>Logout</translate></a>
+                            <a ui-sref="passphrase"><translate>Logout</translate></a>
                         </li>
                     </ul>
                 </div>
@@ -216,18 +216,18 @@
         <div id="page-nav" ng-if="view.bar.forgingMenu">
             <ul class="nav nav-underline pull-right" ng-show="!delegate.username && !delegateInRegistration">
                 <li>
-                    <a href="#" class="bold-text registration" ng-click="registrationDelegate()"><translate>delegate registration</translate></a>
+                    <a  class="bold-text registration" ng-click="registrationDelegate()"><translate>delegate registration</translate></a>
                 </li>
             </ul>
             <ul class="nav nav-underline pull-left">
                 <li ui-sref-active="active">
-                    <a href="#" ui-sref="main.forging"><translate>Forging</translate></a>
+                    <a  ui-sref="main.forging"><translate>Forging</translate></a>
                 </li>
                 <li ui-sref-active="active">
-                    <a href="#" ui-sref="main.delegates"><translate>Delegates</translate></a>
+                    <a  ui-sref="main.delegates"><translate>Delegates</translate></a>
                 </li>
                 <li ui-sref-active="active">
-                    <a href="#" ui-sref="main.votes"><translate>My votes ({{myVotesCount||'0'}})</translate></a>
+                    <a  ui-sref="main.votes"><translate>My votes ({{myVotesCount||'0'}})</translate></a>
                 </li>
             </ul>
         </div>
@@ -250,10 +250,10 @@
             </div>
             <ul class="nav nav-underline fast-sort pull-left">
                 <li ui-sref-active="active">
-                    <a href="#" ui-sref="main.dappstore"><translate>HOME</translate></a>
+                    <a  ui-sref="main.dappstore"><translate>HOME</translate></a>
                 </li>
-                <!-- <li><a href="#">TOP RATED</a></li> -->
-                <!-- <li><a href="#">MOST USED</a> -->
+                <!-- <li><a >TOP RATED</a></li> -->
+                <!-- <li><a >MOST USED</a> -->
             </li>
             <li>
                 <a ui-sref='main.dappsCategory({categoryId:"Installed"})'><translate>INSTALLED</translate></a>

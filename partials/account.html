@@ -83,13 +83,13 @@
         <tbody>
           <tr ng-repeat="transaction in transactions">
             <td class="hide-in-1400">
-              <a href="#" ng-click="transactionInfo(transaction)" class="word-break-xs">{{transaction.id}}</a>{{transaction.unconfirmed?' *':''}}
+              <a ng-click="transactionInfo(transaction)" class="word-break-xs">{{transaction.id}}</a>{{transaction.unconfirmed?' *':''}}
             </td>
             <td class="padding-in-1400">
-              <a href="#" ng-click="userInfo(transaction.senderId)" class="word-break-xs">{{transaction.senderId}}</a>
+              <a ng-attr-title="{{transaction.recipientId}}"  ng-click="userInfo(transaction.senderId)" class="word-break-xs">{{transaction.senderId | shortId}}</a>
             </td>
             <td ng-show="transaction.type &lt;= 1">
-              <a href="#" ng-click="userInfo(transaction.recipientId)" class="word-break-xs">{{transaction.recipientId}}</a>
+              <a ng-attr-title="{{transaction.recipientId}}" ng-click="userInfo(transaction.recipientId)" class="word-break-xs">{{transaction.recipientId | shortId}}</a>
             </td>
             <td ng-show="transaction.type &gt; 1"></td>
             <td>

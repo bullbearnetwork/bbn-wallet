@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('liskApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService", 'gettextCatalog', function ($rootScope, $scope, $http, userService, $interval, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService, gettextCatalog) {
+angular.module('liskApp').controller('forgingController', ['$scope', '$rootScope', 'riseAPI', "userService", "$interval", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService", 'gettextCatalog', function ($rootScope, $scope, riseAPI, userService, $interval, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService, gettextCatalog) {
 
     $scope.showAllColumns = false;
     $scope.showFullTime = false;
@@ -173,31 +173,31 @@ angular.module('liskApp').controller('forgingController', ['$scope', '$rootScope
     };
 
     $scope.getForgedAmount = function () {
-        $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey}})
-            .then(function (resp) {
-                $scope.totalForged = resp.data.forged;
-            });
+        riseAPI.delegates.getForgedByAccount({generatorPublicKey: userService.publicKey})
+          .then(function (resp) {
+            $scope.totalForged = resp.forged;
+          });
     };
 
     $scope.getForgingStatistics = function () {
-        $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey, start: moment (moment().format('YYYY-MM-DD')).unix (), end: moment().unix ()}})
+        riseAPI.delegates.getForgedByAccount({generatorPublicKey: userService.publicKey, start: moment (moment().format('YYYY-MM-DD')).unix (), end: moment().unix ()})
             .then(function (resp) {
-                $scope.statistics.today = resp.data.forged;
+                $scope.statistics.today = resp.forged;
             });
 
-        $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey, start: moment().subtract (1, 'days').unix (), end: moment().unix ()}})
+        riseAPI.delegates.getForgedByAccount({generatorPublicKey: userService.publicKey, start: moment().subtract (1, 'days').unix (), end: moment().unix ()})
             .then(function (resp) {
-                $scope.statistics.last24h = resp.data.forged;
+                $scope.statistics.last24h = resp.forged;
             });
 
-        $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey, start: moment().subtract (7, 'days').unix (), end: moment().unix ()}})
+        riseAPI.delegates.getForgedByAccount({generatorPublicKey: userService.publicKey, start: moment().subtract (7, 'days').unix (), end: moment().unix ()})
             .then(function (resp) {
-                $scope.statistics.last7d = resp.data.forged;
+                $scope.statistics.last7d = resp.forged;
             });
 
-        $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey, start: moment().subtract (30, 'days').unix (), end: moment().unix ()}})
+        riseAPI.delegates.getForgedByAccount({generatorPublicKey: userService.publicKey, start: moment().subtract (30, 'days').unix (), end: moment().unix ()})
             .then(function (resp) {
-                $scope.statistics.last30d = resp.data.forged;
+                $scope.statistics.last30d = resp.forged;
             });
     };
 

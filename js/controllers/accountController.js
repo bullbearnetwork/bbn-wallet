@@ -1,6 +1,7 @@
 require('angular');
 
-angular.module('liskApp').controller('accountController', ['$state','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'gettextCatalog', function ($state, $rootScope, $scope, $http, userService, $interval, $timeout, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, gettextCatalog) {
+angular.module('liskApp').controller('accountController', ['$state','$scope', '$rootScope', 'riseAPI', '$http', "userService", "$interval", "$timeout", "sendTransactionModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'gettextCatalog',
+  function ($state, $rootScope, $scope, riseAPI, $http, userService, $interval, $timeout, sendTransactionModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, gettextCatalog) {
 
     $scope.view = viewFactory;
     $scope.view.inLoading = true;
@@ -61,17 +62,14 @@ angular.module('liskApp').controller('accountController', ['$state','$scope', '$
     }
 
     $scope.getTransactions = function () {
-        $http.get("/api/transactions", {
-            params: {
-                senderPublicKey: userService.publicKey,
-                recipientId: $scope.address,
-                limit: 8,
-                orderBy: 'timestamp:desc'
-            }
+        riseAPI.transactions.getList({
+          senderPublicKey: userService.publicKey,
+          recipientId: $scope.address,
+          limit: 8,
+          orderBy: 'timestamp:desc'
         }).then(function (resp) {
-            var transactions = resp.data.transactions;
-
-            $http.get('/api/transactions/unconfirmed', {
+            var transactions = resp.transactions;
+            $http.get(riseAPI.nodeAddress+'/api/transactions/unconfirmed', {
                 params: {
                     senderPublicKey: userService.publicKey,
                     address: userService.address
@@ -92,10 +90,12 @@ angular.module('liskApp').controller('accountController', ['$state','$scope', '$
     }
 
     $scope.getAccount = function () {
-        $http.get("/api/accounts", {params: {address: userService.address}}).then(function (resp) {
+        riseAPI.accounts.getAccount(userService.address)
+          .catch(function(err) { return {account: null}})
+          .then(function (resp) {
             $scope.view.inLoading = false;
-            if (resp.data.account) {
-                var account = resp.data.account;
+            if (resp.account) {
+                var account = resp.account;
                 userService.balance = account.balance;
                 userService.multisignatures = account.multisignatures;
                 userService.u_multisignatures = account.u_multisignatures;
