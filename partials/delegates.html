@@ -97,7 +97,7 @@
                     <td data-title="tableTopDelegates.cols.rate" sortable="'rate'">{{delegate.rate}}</td>
                     <td data-title="tableTopDelegates.cols.username" sortable="'username'" class="username">{{delegate.username}}</td>
                     <td data-title="tableTopDelegates.cols.address">
-                        <a ng-click="userInfo(delegate.address)">{{delegate.address | shortAddress}}</a>
+                        <a ng-click="userInfo(delegate.address)">{{delegate.address | shortId}}</a>
                     </td>
                     <td data-title="tableTopDelegates.cols.productivity" sortable="'productivity'">
                         <span ng-show="delegate.productivity">{{(delegate.productivity)}}%</span>

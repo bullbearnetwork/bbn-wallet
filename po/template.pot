@@ -73,7 +73,7 @@ msgstr ""
 msgid "BBN - The Trader's blockchain"
 msgstr ""
 
-#: js/controllers/delegatesController.js:150
+#: js/controllers/delegatesController.js:148
 #: js/controllers/delegatesController.js:192
 #: js/controllers/votedDelegatesController.js:132
 #: js/controllers/walletPendingsController.js:43
@@ -644,7 +644,7 @@ msgstr ""
 msgid "NO"
 msgstr ""
 
-#: js/controllers/delegatesController.js:149
+#: js/controllers/delegatesController.js:147
 #: js/controllers/delegatesController.js:191
 #: js/controllers/votedDelegatesController.js:131
 msgid "Name"

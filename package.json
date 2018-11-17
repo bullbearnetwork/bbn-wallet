@@ -1,16 +1,35 @@
 {
-  "name": "rise-ui",
+  "name": "bbn-wallet",
   "version": "0.3.2",
-  "description": "Rise user-interface submodule",
+  "description": "BBN Wallet",
   "main": "main.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:RiseVision/rise-wallet.git"
   },
   "build": {
-    "appId": "bbn.network",
+    "appId": "network.bbn.wallet",
+    "productName": "BBN Wallet",
+    "directories": {
+      "output": "build"
+    },
+    "artifactName": "bbn-wallet-${os}-${arch}-${version}.${ext}",
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Network"
+    },
+    "win": {
+      "target": "nsis"
+    },
     "files": [
-      "**/*"
+      "static/**/*",
+      "partials/**/*",
+      "images/**/*",
+      "main.js",
+      "index-electron.html",
+      "loading.html"
     ]
   },
   "private": true,
@@ -18,6 +37,9 @@
   "license": "MIT",
   "scripts": {
     "bundle": "electron .",
+    "cleandist": "rm -rf dist",
+    "build": "electron-builder --x64 --dir",
+    "build:win": "electron-builder --win --x64 --dir",
     "postinstall": "bower install",
     "bower-install": "bower install",
     "grunt-release": "grunt release"
@@ -25,7 +47,8 @@
   "devDependencies": {
     "browserify": "latest",
     "electron": "^3.0.9",
-    "express": "^4.15.4",
+    "electron-builder": "^20.36.2",
+    "express": "^4.16.4",
     "grunt": "=1.0.1",
     "grunt-angular-gettext": "=2.2.3",
     "grunt-browserify": "latest",
@@ -37,13 +60,13 @@
     "grunt-contrib-nodeunit": "=1.0.0",
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "latest",
-    "http-proxy": "^1.16.2",
+    "http-proxy": "^1.17.0",
     "http-proxy-middleware": "^0.17.4",
     "is-electron": "^2.2.0",
     "jit-grunt": "=0.10.0"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-u2f": "^4.21.0",
+    "@ledgerhq/hw-transport-u2f": "^4.28.0",
     "angular": "=1.5.8",
     "angular-animate": "=1.5.8",
     "angular-chart.js": "=0.10.2",
@@ -69,7 +92,7 @@
     "ng-table": "=0.5.4",
     "requests": "0.1.7",
     "ripemd160": "^2.0.2",
-    "risejs": "^1.4.0",
+    "risejs": "^1.4.1",
     "socket.io": "=1.4.8"
   }
 }

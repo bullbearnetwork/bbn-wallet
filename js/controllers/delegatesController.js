@@ -111,7 +111,7 @@ angular.module('liskApp').controller('delegatesController', ['$scope', '$rootSco
     $scope.delegates = {
         list: [],
         getList: function (cb) {
-            $http.get("/api/accounts/delegates/", {params: {address: userService.address}})
+            $http.get(riseAPI.nodeAddress+"/api/accounts/delegates/", {params: {address: userService.address}})
                 .then(function (response) {
                     if (response.data.delegates == null) {
                         return [];
@@ -126,8 +126,6 @@ angular.module('liskApp').controller('delegatesController', ['$scope', '$rootSco
             return this.list.indexOf(publicKey) != -1;
         }
     };
-    $scope.delegates.getList(function () {
-    });
     // end Delegates exist
 
     // Search deletates

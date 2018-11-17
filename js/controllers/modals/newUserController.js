@@ -38,7 +38,7 @@ angular.module('liskApp').controller('newUserController', ["BBNOffline","$scope"
           var kp = BBNOffline.deriveKeypair(pass);
           var address = BBNOffline.calcAddress(kp.publicKey);
           newUser.deactivate();
-          userService.setData(address, kp.publicKey, 0,0,0);
+          userService.setData(address, kp.publicKey.toString('hex'), 0,0,0);
           userService.setForging(0);
           userService.setSecondPassphrase(0);
           userService.unconfirmedPassphrase = 0;
