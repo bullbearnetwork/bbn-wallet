@@ -57,7 +57,7 @@ msgstr ""
 msgid "Applications"
 msgstr ""
 
-#: js/controllers/delegatesController.js:194
+#: js/controllers/delegatesController.js:192
 #: js/controllers/forgingController.js:64
 #: js/controllers/votedDelegatesController.js:134
 #: partials/forging.html:75
@@ -74,7 +74,7 @@ msgid "BBN - The Trader's blockchain"
 msgstr ""
 
 #: js/controllers/delegatesController.js:148
-#: js/controllers/delegatesController.js:192
+#: js/controllers/delegatesController.js:190
 #: js/controllers/votedDelegatesController.js:132
 #: js/controllers/walletPendingsController.js:43
 #: partials/modals/multisignatureModal.html:52
@@ -645,7 +645,7 @@ msgid "NO"
 msgstr ""
 
 #: js/controllers/delegatesController.js:147
-#: js/controllers/delegatesController.js:191
+#: js/controllers/delegatesController.js:189
 #: js/controllers/votedDelegatesController.js:131
 msgid "Name"
 msgstr ""
@@ -810,7 +810,7 @@ msgstr ""
 msgid "REMOVE VOTE"
 msgstr ""
 
-#: js/controllers/delegatesController.js:190
+#: js/controllers/delegatesController.js:188
 #: js/controllers/forgingController.js:41
 #: js/controllers/votedDelegatesController.js:130
 #: partials/forging.html:56
@@ -1098,7 +1098,7 @@ msgstr ""
 msgid "USD Equivalent"
 msgstr ""
 
-#: js/controllers/delegatesController.js:193
+#: js/controllers/delegatesController.js:191
 #: js/controllers/forgingController.js:53
 #: js/controllers/votedDelegatesController.js:133
 msgid "Uptime"
@@ -1126,7 +1126,7 @@ msgid "You can find your passphrase below."
 msgstr ""
 
 #: partials/modals/vote.html:33
-msgid "You can only vote for 1 delegate per wallet address. You can unvote at any time."
+msgid "You can only vote for 11 delegates per wallet address. You can unvote at any time."
 msgstr ""
 
 #: partials/dapps.html:153
