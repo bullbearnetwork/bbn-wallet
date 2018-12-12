@@ -40,6 +40,7 @@
     "cleandist": "rm -rf dist",
     "build": "electron-builder --x64 --dir",
     "build:win": "electron-builder --win --x64 --dir",
+    "dist": "electron-builder",
     "postinstall": "bower install",
     "bower-install": "bower install",
     "grunt-release": "grunt release"
@@ -47,7 +48,7 @@
   "devDependencies": {
     "browserify": "latest",
     "electron": "^3.0.9",
-    "electron-builder": "^20.36.2",
+    "electron-builder": "=20.38.3",
     "express": "^4.16.4",
     "grunt": "=1.0.1",
     "grunt-angular-gettext": "=2.2.3",
