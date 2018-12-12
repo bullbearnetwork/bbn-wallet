@@ -5,7 +5,7 @@
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:RiseVision/rise-wallet.git"
+    "url": "git@github.com:bullbearnetwork/bbn-wallet.git"
   },
   "build": {
     "appId": "network.bbn.wallet",

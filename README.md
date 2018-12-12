@@ -1,8 +1,8 @@
-# Rise UI
+# BBN UI
 
-Rise is a next generation crypto-currency and blockchain application platform, written entirely in JavaScript. For more information please refer to our website: https://rise.vision/.
+BBN is a next generation crypto-currency and blockchain application platform, written entirely in JavaScript. For more information please refer to our website: https://BBN.vision/.
 
-This repository contains the [AngularJS](https://angularjs.org/) based user-interface submodule of the Rise client.
+This repository contains the [AngularJS](https://angularjs.org/) based user-interface submodule of the BBN client.
 
 ## Installation
 
@@ -26,11 +26,12 @@ npm run grunt-release
 
 You can set the following cookies (e.g. using [EditThisCookies](http://www.editthiscookie.com/)) for more comfortable local development:
 - `passphrase` - passphrase to sign you in  
-- `goto` - name of state to go to. See [possible state names](https://github.com/risevision/rise-wallet/blob/dev/js/app.js#L25-L100).
+- `goto` - name of state to go to. See [possible state names](https://github.com/bullbearnetwork/bbn-wallet/blob/bbn/js/app.js#L25-L100).
 
 
 ## Authors
 
+- BBN Team <info@bullbear.network>
 - Jan <lepetitjan@icloud.com>
 - Ralf S <ralfs@shiftnrg.org>
 - Vera Nekrasova <vera.limita@gmail.com>
@@ -42,7 +43,8 @@ You can set the following cookies (e.g. using [EditThisCookies](http://www.editt
 
 The MIT License (MIT)  
 
-Copyright (c) 2017 Rise<br>
+Copyright (c) 2018 BBN<br>
+Copyright (c) 2017 RISE<br>
 Copyright (c) 2017 Shift<br>
 Copyright (c) 2016 Lisk<br>
 Copyright (c) 2014-2015 Crypti<br> 
